@@ -11,21 +11,18 @@ class Machine {
 
     var connectionState: ConnectionState {
         get {
-            guard let socket = socket else {
-                return .Disconnected
-            }
+            guard let socket = socket else { return .Disconnected }
             
-            if socket.isConnected {
-                return .Connected
-            } else {
-                return .Disconnected
-            }
+            if socket.isActive { return .Connected }
+            else { return .Disconnected }
         }
     }
 
     var socket: Socket? = nil
     private var keepAliveTimer: Timer? = nil
+    private var reconnectTimer: Timer? = nil
     private var doUpdate: Bool = true
+    private let socketLockQueue = DispatchQueue(label: "socketLockQueue")
     
     var minutes: UInt8 = 0 {
         didSet { propertyChanged(propName: "minutes") }
@@ -72,7 +69,7 @@ class Machine {
         }
     }
 
-    func connect(timeout: UInt = 1000, onSuccess: (() -> Void)? = nil, onError: ((String) -> Void)? = nil) {
+    func connect(timeout: UInt = 1000, onError: ((String) -> Void)? = nil, onSuccess: (() -> Void)? = nil) {
         guard let socket = socket else {
             log.warning("Could not connect to the machine because the socket is not initialized.")
             if let onError = onError {
@@ -85,12 +82,12 @@ class Machine {
         queue.async {
             do {
                 try socket.connect(to: "10.10.100.254", port: 8899, timeout: timeout)
-                log.info("Connection the the machine has been successfully established.")
+                log.info("Connection the the machine has been established successfully.")
+                self.installKeepAliveTimer()
+                self.listen()
+                self.requestUpdate()
                 if let onSuccess = onSuccess {
-                    self.installKeepAliveTimer()
-                    self.listen()
-                    self.requestUpdate()
-                    onSuccess()
+                    queue.sync(execute: onSuccess)
                 }
             } catch let e {
                 log.error("Error while trying to connect to machine.", context: e)
@@ -102,9 +99,95 @@ class Machine {
     }
     
     func updateWithoutTrigger(closure: () -> Void) {
-        doUpdate = false
-        closure()
-        doUpdate = true
+        if doUpdate {
+            doUpdate = false
+            closure()
+            doUpdate = true
+        } else {
+            closure()
+        }
+    }
+    
+    func startWeight() {
+        let message = Message(messageType: .Control)
+        message.commandType = .WeightStart
+        if !sendMessage(message: message) {
+            log.error("Error while sending start weight command.", context: self)
+        }
+    }
+    
+    func stopWeight() {
+        let message = Message(messageType: .Control)
+        message.commandType = .WeightStop
+        
+        if !sendMessage(message: message) {
+            log.error("Error while sending stop weight command.", context: self)
+        }
+    }
+    
+    func tareWeight() {
+        let message = Message(messageType: .Control)
+        message.commandType = .WeightTare
+        if !sendMessage(message: message) {
+            log.error("Error while sending tare weight command.", context: self)
+        }
+    }
+    
+    func selectProgram(program: FixedProgram) {
+        updateWithoutTrigger {
+            self.minutes = 0
+            self.seconds = 0
+            self.speed = 0
+            self.temperature = 0
+            self.recipeClass = RecipeClass.FixedProgram
+            self.recipeId = program.rawValue
+            self.recipeStep = 0
+        }
+        if !commit() {
+            log.error("Error while selecting program.", context: self)
+        }
+    }
+    
+    func start() {
+        let message = Message(messageType: .Control)
+        message.commandType = .Start
+        log.info("Starting machine...")
+        if !sendMessage(message: message) {
+            log.error("Error while starting machine.", context: self)
+        }
+    }
+    
+    func stop() {
+        let message = Message(messageType: .Control)
+        message.commandType = .Stop
+        log.info("Stopping machine...")
+        if !sendMessage(message: message) {
+            log.error("Error while stopping machine.", context: self)
+        }
+    }
+    
+    func pause() {
+        let message = Message(messageType: .Control)
+        message.commandType = .Pause
+        log.info("Pausing machine...")
+        if !sendMessage(message: message) {
+            log.error("Error while pausing machine.", context: self)
+        }
+    }
+    
+    func reset() {
+        updateWithoutTrigger {
+            self.minutes = 0
+            self.seconds = 0
+            self.temperature = 0
+            self.speed = 0
+            self.recipeClass = .Reset
+            self.recipeId = 0
+            self.recipeStep = 0
+        }
+        if !commit() {
+            log.error("Error while reseting.", context: self)
+        }
     }
     
     private func propertyChanged(propName: String) {
@@ -116,22 +199,33 @@ class Machine {
     }
     
     private func listen() {
+        guard let socket = socket else {
+            log.error("Cannot listen because socket is not initialized.")
+            return
+        }
+        
         let queue = DispatchQueue.global(qos: .background)
         queue.async {
             repeat {
                 var readData = Data(capacity: 21)
                 do {
-                    let readBytes = try self.socket?.read(into: &readData) ?? 0
+                    let readWrite: (readable: Bool, writable: Bool) = try socket.isReadableOrWritable(waitForever: true, timeout: 10000)
+                    if readWrite.readable {
+                        let readBytes = try socket.read(into: &readData)
                 
-                    if readBytes > 0 {
-                        let message = Message(fromData: readData)
-                        self.handleMessage(message: message)
+                        if readBytes > 0 {
+                            let message = Message(fromData: readData)
+                            self.handleMessage(message: message)
+                        }
                     }
                 } catch let e {
                     log.error("Error while reading data.", context: e)
+                    self.onError()
+                    break
                 }
                 
             } while self.connectionState == .Connected
+            log.debug("Broke out of listen-loop.")
         }
     }
     
@@ -157,17 +251,25 @@ class Machine {
         }
     }
     
-    private func sendMessage(message: Message) -> Bool {
+    private func sendMessage(message: Message) -> Bool {        
         guard let socket = socket else {
             log.warning("Could not send message because socket was nil.")
             return false
         }
         
         do {
-            try socket.write(from: message.toData())
-            return true
+            let readWrite: (readable: Bool, writable: Bool) = try socket.isReadableOrWritable(waitForever: true, timeout: 10000)
+            if readWrite.writable {
+                return try socketLockQueue.sync { () -> Bool in
+                    try socket.write(from: message.toData())
+                    Thread.sleep(forTimeInterval: 0.1)
+                    return true
+                }
+            }
+            return false
         } catch let e {
             log.error("Error while trying to send message.", context: e)
+            onError()
             return false
         }
     }
@@ -196,21 +298,39 @@ class Machine {
     }
     
     private func installKeepAliveTimer() {
-        if let timer = keepAliveTimer {
+        let queue = DispatchQueue.main
+        
+        queue.sync {
+            if let timer = self.keepAliveTimer {
+                timer.invalidate()
+            }
+            
+            self.keepAliveTimer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true, block: { (timer) in
+                let keepAliveObject = Message(messageType: .KeepAlive)
+                log.info("Sending keep alive signal...")
+                if !self.sendMessage(message: keepAliveObject) {
+                    log.error("Error while sending the keep alive signal.")
+                }
+            })
+        }
+    }
+
+    private func onError() {
+        guard socket != nil else { return }
+        
+        if let timer = self.reconnectTimer {
             timer.invalidate()
         }
         
-        keepAliveTimer = Timer.scheduledTimer(withTimeInterval: 60 * 1000, repeats: true, block: { (timer) in
-            let keepAliveObject = Message(messageType: .KeepAlive)
-            log.info("Sending keep alive signal...")
-            do {
-                try self.socket?.write(from: keepAliveObject.toData())
-            } catch let e {
-                log.error("Error while sending the keep alive signal.", context: e)
-            }
-        })
+        if connectionState == .Disconnected {
+            reconnectTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
+                self.connect(onSuccess: {
+                    log.info("Connection has been restored successfully.")
+                    self.reconnectTimer?.invalidate()
+                })
+            })
+        }
     }
-
 
 
 }

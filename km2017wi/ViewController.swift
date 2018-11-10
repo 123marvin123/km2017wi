@@ -15,9 +15,11 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         log.info("Trying to connect...")
-        machine.connect(onSuccess: {
-            log.info("Successfully connected 😇")
-        })
+        machine.connect() {
+            machine.selectProgram(program: FixedProgram.Steaming)
+            machine.start()
+        }
+        
     }
 
 

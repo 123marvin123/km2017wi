@@ -10,7 +10,7 @@ class Message {
     static let DefaultHeader0: UInt8 = 0xff
     static let DefaultHeader1: UInt8 = 0x5a
 
-    private var buffer = Data(capacity: 21)
+    private var buffer = Data(count: 21)
 
     var header0 = DefaultHeader0
     var header1 = DefaultHeader1
@@ -34,7 +34,7 @@ class Message {
     private var weightL: UInt8 = 0
     private(set) var measuredTemperature: UInt8 = 0
     
-    var recipeClass: RecipeClass = RecipeClass.Reset
+    var recipeClass = RecipeClass.Reset
     var recipeId: UInt8 = 0
     var recipeStep: UInt8 = 0
     private(set) var machineState = MachineState.Idle
@@ -62,11 +62,11 @@ class Message {
         mapValues(data: data)
         
         if !validateHeaders(header0: data[MessageFormat.Header0.rawValue], header1: data[MessageFormat.Header1.rawValue]) {
-            log.warning("Headers of received message are not valid", context: self)
+            log.warning("Headers of received message are not valid")
         }
         
         if !equalsCrc(crc: data[MessageFormat.CRC.rawValue]) {
-            log.warning("CRC values of received data do not match.", context: self)
+            log.warning("Bruh 🤷🏿‍♂️ CRC values of received data do not match.")
         }
     }
     

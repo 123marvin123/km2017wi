@@ -21,12 +21,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let console = ConsoleDestination()
         let file = FileDestination()
 
-        console.format = "$DHH:mm:ss$d $L $M"
+        console.format = "$DHH:mm:ss$d $L $M $X"
         console.levelString.verbose = "👻 VERBOSE"
         console.levelString.debug = "🤔 DEBUG"
         console.levelString.info = "🙂 INFO"
         console.levelString.warning = "😱 WARNING"
-        console.levelString.error = "🤯 ERROR"
+        console.levelString.error = "💥 ERROR"
 
         log.addDestination(console)
         log.addDestination(file)
