@@ -34,7 +34,7 @@ class Message {
     private var weightL: UInt8 = 0
     private(set) var measuredTemperature: UInt8 = 0
     
-    var recipeClass: UInt8 = 0
+    var recipeClass: RecipeClass = RecipeClass.Reset
     var recipeId: UInt8 = 0
     var recipeStep: UInt8 = 0
     private(set) var machineState = MachineState.Idle
@@ -93,7 +93,7 @@ class Message {
         self.weightH = data[MessageFormat.WeightH.rawValue]
         self.weightL = data[MessageFormat.WeightL.rawValue]
         self.measuredTemperature = data[MessageFormat.MeasuredTemperature.rawValue]
-        self.recipeClass = data[MessageFormat.RecipeClass.rawValue]
+        self.recipeClass = RecipeClass(rawValue: data[MessageFormat.RecipeClass.rawValue]) ?? .Reset
         self.recipeId = data[MessageFormat.RecipeId.rawValue]
         self.recipeStep = data[MessageFormat.RecipeStep.rawValue]
         self.machineState = MachineState(rawValue: data[MessageFormat.MachineState.rawValue]) ?? .Idle
@@ -130,7 +130,7 @@ class Message {
         buffer[MessageFormat.WeightL.rawValue] = self.weightL
         buffer[MessageFormat.MeasuredTemperature.rawValue] = self.measuredTemperature
         buffer[MessageFormat.RecipeId.rawValue] = self.recipeId
-        buffer[MessageFormat.RecipeClass.rawValue] = self.recipeClass
+        buffer[MessageFormat.RecipeClass.rawValue] = self.recipeClass.rawValue
         buffer[MessageFormat.RecipeStep.rawValue] = self.recipeStep
         buffer[MessageFormat.MachineState.rawValue] = self.machineState.rawValue
         

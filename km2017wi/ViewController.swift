@@ -14,7 +14,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        log.info("Trying to connect to the machine...")
+        log.info("Trying to connect...")
+        machine.connect(onSuccess: {
+            log.info("Successfully connected 😇")
+        })
     }
 
 
