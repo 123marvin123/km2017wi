@@ -66,7 +66,7 @@ class Message {
         }
         
         if !equalsCrc(crc: data[MessageFormat.CRC.rawValue]) {
-            log.warning("Bruh 🤷🏿‍♂️ CRC values of received data do not match.")
+            log.warning("Bruh 🤷🏿‍♂️ CRC value of received data does not match.")
         }
     }
     

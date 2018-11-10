@@ -112,7 +112,7 @@ class Machine {
         let message = Message(messageType: .Control)
         message.commandType = .WeightStart
         if !sendMessage(message: message) {
-            log.error("Error while sending start weight command.", context: self)
+            log.error("Error while sending start weight command.")
         }
     }
     
@@ -121,7 +121,7 @@ class Machine {
         message.commandType = .WeightStop
         
         if !sendMessage(message: message) {
-            log.error("Error while sending stop weight command.", context: self)
+            log.error("Error while sending stop weight command.")
         }
     }
     
@@ -129,7 +129,7 @@ class Machine {
         let message = Message(messageType: .Control)
         message.commandType = .WeightTare
         if !sendMessage(message: message) {
-            log.error("Error while sending tare weight command.", context: self)
+            log.error("Error while sending tare weight command.")
         }
     }
     
@@ -144,7 +144,7 @@ class Machine {
             self.recipeStep = 0
         }
         if !commit() {
-            log.error("Error while selecting program.", context: self)
+            log.error("Error while selecting program.")
         }
     }
     
@@ -153,7 +153,7 @@ class Machine {
         message.commandType = .Start
         log.info("Starting machine...")
         if !sendMessage(message: message) {
-            log.error("Error while starting machine.", context: self)
+            log.error("Error while starting machine.")
         }
     }
     
@@ -162,7 +162,7 @@ class Machine {
         message.commandType = .Stop
         log.info("Stopping machine...")
         if !sendMessage(message: message) {
-            log.error("Error while stopping machine.", context: self)
+            log.error("Error while stopping machine.")
         }
     }
     
@@ -171,7 +171,7 @@ class Machine {
         message.commandType = .Pause
         log.info("Pausing machine...")
         if !sendMessage(message: message) {
-            log.error("Error while pausing machine.", context: self)
+            log.error("Error while pausing machine.")
         }
     }
     
@@ -186,7 +186,7 @@ class Machine {
             self.recipeStep = 0
         }
         if !commit() {
-            log.error("Error while reseting.", context: self)
+            log.error("Error while reseting.")
         }
     }
     
