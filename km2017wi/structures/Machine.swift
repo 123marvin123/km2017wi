@@ -18,7 +18,7 @@ class Machine {
         }
     }
 
-    var socket: Socket? = nil
+    private(set) var socket: Socket? = nil
     private var keepAliveTimer: Timer? = nil
     private var reconnectTimer: Timer? = nil
     private var doUpdate: Bool = true
@@ -298,9 +298,6 @@ class Machine {
     }
     
     private func installKeepAliveTimer() {
-        let queue = DispatchQueue.main
-        
-        queue.sync {
             if let timer = self.keepAliveTimer {
                 timer.invalidate()
             }
@@ -312,7 +309,6 @@ class Machine {
                     log.error("Error while sending the keep alive signal.")
                 }
             })
-        }
     }
 
     private func onError() {
@@ -324,6 +320,7 @@ class Machine {
         
         if connectionState == .Disconnected {
             reconnectTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
+                log.verbose("Trying to restore connection...")
                 self.connect(onSuccess: {
                     log.info("Connection has been restored successfully.")
                     self.reconnectTimer?.invalidate()
