@@ -8,7 +8,6 @@
 
 import UIKit
 import Cosmos
-import Hero
 
 class OnlineRecipeCollectionViewCell: UICollectionViewCell {
     
@@ -16,11 +15,5 @@ class OnlineRecipeCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var rating: CosmosView!
     @IBOutlet weak var ratingLabel: UILabel!
-    
-    var id: String? {
-        didSet {
-            image.hero.id = id
-        }
-    }
-    
+
 }
