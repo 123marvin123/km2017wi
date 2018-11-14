@@ -14,7 +14,17 @@ class CategoryViewController: UIViewController, UICollectionViewDelegate, UIColl
                       OnlineCategory(id: "vorspeisensalate", title: "Vorspeisen/Salate", image: UIImage(named: "02-Vorspeisen-Salate")),
                       OnlineCategory(id: "suppen", title: "Suppen", image: UIImage(named: "03-Suppen")),
                       OnlineCategory(id: "hauptgerichte-mit-fleisch", title: "Hauptgerichte mit Fleisch", image: UIImage(named: "04-Hauptgericht-Fleisch")),
-                      OnlineCategory(id: "hauptgerichte-mit-fisch-meeresfruchten", title: "Hauptgerichte mit Fisch", image: UIImage(named: "05-Hauptgericht-Fisch"))]
+                      OnlineCategory(id: "hauptgerichte-mit-fisch-meeresfruchten", title: "Hauptgerichte mit Fisch", image: UIImage(named: "05-Hauptgericht-Fisch")),
+                      OnlineCategory(id: "hauptgerichte-mit-gemuse", title: "Hauptgerichte mit Gemüse", image: UIImage(named: "06-Hauptgericht-Gemüse")),
+                      OnlineCategory(id: "sonstige-hauptgerichte", title: "Sonstige Hauptgerichte", image: UIImage(named: "07-Sonstige-Hauptgerichte")),
+                      OnlineCategory(id: "beilagen", title: "Beilagen", image: UIImage(named: "08-Beilagen")),
+                      OnlineCategory(id: "saucendipsbrotaufstriche", title: "Saucen/Dips/Brotaufstriche", image: UIImage(named: "09-Dips")),
+                      OnlineCategory(id: "desserts", title: "Desserts", image: UIImage(named: "10-Desserts")),
+                      OnlineCategory(id: "backen-suß", title: "Backen süß", image: UIImage(named: "11-BackenSüß")),
+                      OnlineCategory(id: "backen-herzhaft", title: "Backen herzhaft", image: UIImage(named: "12-BackenHerzhaft")),
+                      OnlineCategory(id: "brot-brotchen", title: "Brot & Brötchen", image: UIImage(named: "13-Brot")),
+                      OnlineCategory(id: "getranke", title: "Getränke", image: UIImage(named: "14-Getränke")),
+                      OnlineCategory(id: "babybeikostbreie", title: "Baby-Beikost/Breie", image: UIImage(named: "15-Brei"))]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,16 +43,7 @@ class CategoryViewController: UIViewController, UICollectionViewDelegate, UIColl
         cell.image.image = category.image
         cell.category = category
         
-        cell.contentView.layer.cornerRadius = 4.0
-        cell.contentView.layer.borderWidth = 1.0
-        cell.contentView.layer.borderColor = UIColor.clear.cgColor
-        cell.contentView.layer.masksToBounds = false
-        cell.layer.shadowColor = UIColor.gray.cgColor
-        cell.layer.shadowOffset = CGSize(width: 0, height: 1.0)
-        cell.layer.shadowRadius = 4.0
-        cell.layer.shadowOpacity = 1.0
-        cell.layer.masksToBounds = false
-        cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: cell.contentView.layer.cornerRadius).cgPath
+        collectionViewShadow(cell: cell)
         
         return cell
     }

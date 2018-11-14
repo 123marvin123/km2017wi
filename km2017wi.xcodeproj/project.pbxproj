@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0F259751A2B9CED0DBBBB259 /* Pods_km2017wiUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B09C50206E5B58A942E16F21 /* Pods_km2017wiUITests.framework */; };
 		3EA8951CC5B32EB45653D698 /* Pods_km2017wiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64E4781836C92F7CBE895067 /* Pods_km2017wiTests.framework */; };
+		58436AE2219CD09900DC84E7 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58436AE1219CD09900DC84E7 /* Utilities.swift */; };
 		584BB6D92198CD1B003168BE /* OnlineCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584BB6D82198CD1B003168BE /* OnlineCategory.swift */; };
 		586F4737219877C100B27E10 /* CookRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586F4736219877C100B27E10 /* CookRecipeViewController.swift */; };
 		5870C16121989EA000974D9B /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5870C16021989EA000974D9B /* CategoryViewController.swift */; };
@@ -19,6 +20,7 @@
 		58C1B51C219853C300C9F7EF /* RecipeStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C1B51B219853C300C9F7EF /* RecipeStep.swift */; };
 		58C1B51E219853C900C9F7EF /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C1B51D219853C900C9F7EF /* Recipe.swift */; };
 		58C1B5202198558800C9F7EF /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C1B51F2198558800C9F7EF /* Category.swift */; };
+		58C1EE1E219B78D300541A75 /* RecipeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C1EE1D219B78D300541A75 /* RecipeDetailViewController.swift */; };
 		58C9681321975D740086ED8E /* RecipeClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C9681221975D740086ED8E /* RecipeClass.swift */; };
 		58C9681521975E560086ED8E /* FixedProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C9681421975E560086ED8E /* FixedProgram.swift */; };
 		58C9681721975E8B0086ED8E /* DeviceLedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C9681621975E8B0086ED8E /* DeviceLedState.swift */; };
@@ -39,7 +41,6 @@
 		BF8CBD2E26C7E60E781854BA /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8CB3D56D22C2192B59F2AE /* ConnectionState.swift */; };
 		BF8CBDAE6840DAE65CB5A0FC /* MessageFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8CB0A8C57DAA872667ABF6 /* MessageFormat.swift */; };
 		BF8CBE54646D5667F0E7E257 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF8CBEC27FA8D58AA1910EA7 /* Main.storyboard */; };
-		BF8CBFD759E684ABF6D5A9A2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8CB81E48318E73821D4D99 /* ViewController.swift */; };
 		BF8CBFF70C0C6CE45574975C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF8CB8C9AEDFDA7F36E420EA /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -76,6 +77,7 @@
 /* Begin PBXFileReference section */
 		2155186068AEE80EB6144DF0 /* Pods-km2017wi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-km2017wi.release.xcconfig"; path = "Pods/Target Support Files/Pods-km2017wi/Pods-km2017wi.release.xcconfig"; sourceTree = "<group>"; };
 		466DFE2935F2E5C115C83E69 /* Pods-km2017wiUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-km2017wiUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-km2017wiUITests/Pods-km2017wiUITests.release.xcconfig"; sourceTree = "<group>"; };
+		58436AE1219CD09900DC84E7 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		584BB6D82198CD1B003168BE /* OnlineCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineCategory.swift; sourceTree = "<group>"; };
 		586F4736219877C100B27E10 /* CookRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookRecipeViewController.swift; sourceTree = "<group>"; };
 		5870C16021989EA000974D9B /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 		58C1B51B219853C300C9F7EF /* RecipeStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeStep.swift; sourceTree = "<group>"; };
 		58C1B51D219853C900C9F7EF /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		58C1B51F2198558800C9F7EF /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		58C1EE1D219B78D300541A75 /* RecipeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailViewController.swift; sourceTree = "<group>"; };
 		58C9681221975D740086ED8E /* RecipeClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeClass.swift; sourceTree = "<group>"; };
 		58C9681421975E560086ED8E /* FixedProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedProgram.swift; sourceTree = "<group>"; };
 		58C9681621975E8B0086ED8E /* DeviceLedState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceLedState.swift; sourceTree = "<group>"; };
@@ -106,7 +109,6 @@
 		BF8CB608209D279A3FFA5827 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BF8CB78F56271489F08F4DCE /* Machine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Machine.swift; sourceTree = "<group>"; };
 		BF8CB7F2CDDDD72AE87AB04F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
-		BF8CB81E48318E73821D4D99 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		BF8CB8C9AEDFDA7F36E420EA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BF8CBAC14400D5F83B6966C8 /* km2017wiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = km2017wiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF8CBB85989207A98D2BFADB /* km2017wiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = km2017wiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -171,6 +173,28 @@
 				B09C50206E5B58A942E16F21 /* Pods_km2017wiUITests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		58436ADF219CAA4100DC84E7 /* viewcontrollers */ = {
+			isa = PBXGroup;
+			children = (
+				586F4736219877C100B27E10 /* CookRecipeViewController.swift */,
+				58CB6917219897440017C45A /* WelcomeTabViewController.swift */,
+				58CB6919219897630017C45A /* SettingsViewController.swift */,
+				5870C16021989EA000974D9B /* CategoryViewController.swift */,
+				5870C16A2198AAB000974D9B /* RecipesViewController.swift */,
+				58C1EE1D219B78D300541A75 /* RecipeDetailViewController.swift */,
+			);
+			path = viewcontrollers;
+			sourceTree = "<group>";
+		};
+		58436AE0219CAA5C00DC84E7 /* cells */ = {
+			isa = PBXGroup;
+			children = (
+				5870C1682198A6D600974D9B /* CategoryViewCell.swift */,
+				5870C16C2198BAFB00974D9B /* OnlineRecipeCollectionViewCell.swift */,
+			);
+			path = cells;
 			sourceTree = "<group>";
 		};
 		58C1B51A219853B700C9F7EF /* recipes */ = {
@@ -253,23 +277,18 @@
 		BF8CBF32D292E30E58C09699 /* km2017wi */ = {
 			isa = PBXGroup;
 			children = (
+				58436AE0219CAA5C00DC84E7 /* cells */,
+				58436ADF219CAA4100DC84E7 /* viewcontrollers */,
+				BF8CB1B832EBC8E6586574AD /* structures */,
 				58CB691B219897DB0017C45A /* icons */,
 				BF8CB7F2CDDDD72AE87AB04F /* Info.plist */,
 				BF8CB8C9AEDFDA7F36E420EA /* Assets.xcassets */,
 				BF8CB58034249965F0B8D4B2 /* LaunchScreen.storyboard */,
 				BF8CBCE74D9636CBC882FFE4 /* AppDelegate.swift */,
 				BF8CBEC27FA8D58AA1910EA7 /* Main.storyboard */,
-				BF8CB81E48318E73821D4D99 /* ViewController.swift */,
-				BF8CB1B832EBC8E6586574AD /* structures */,
-				586F4736219877C100B27E10 /* CookRecipeViewController.swift */,
-				58CB6917219897440017C45A /* WelcomeTabViewController.swift */,
-				58CB6919219897630017C45A /* SettingsViewController.swift */,
-				5870C16021989EA000974D9B /* CategoryViewController.swift */,
-				5870C1682198A6D600974D9B /* CategoryViewCell.swift */,
-				5870C16A2198AAB000974D9B /* RecipesViewController.swift */,
-				5870C16C2198BAFB00974D9B /* OnlineRecipeCollectionViewCell.swift */,
 				5870C16E2198BC3F00974D9B /* OnlineRecipe.swift */,
 				584BB6D82198CD1B003168BE /* OnlineCategory.swift */,
+				58436AE1219CD09900DC84E7 /* Utilities.swift */,
 			);
 			path = km2017wi;
 			sourceTree = "<group>";
@@ -400,15 +419,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-km2017wiTests-checkManifestLockResult.txt",
 			);
@@ -422,15 +437,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-km2017wiUITests-checkManifestLockResult.txt",
 			);
@@ -444,31 +455,33 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-km2017wi/Pods-km2017wi-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Auk/Auk.framework",
 				"${BUILT_PRODUCTS_DIR}/BlueSocket/Socket.framework",
 				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
+				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftSoup/SwiftSoup.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyButton/SwiftyButton.framework",
+				"${BUILT_PRODUCTS_DIR}/ViewRow/ViewRow.framework",
+				"${BUILT_PRODUCTS_DIR}/moa/moa.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Auk.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Socket.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMessages.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSoup.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyButton.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ViewRow.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/moa.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -480,15 +493,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-km2017wi-checkManifestLockResult.txt",
 			);
@@ -518,7 +527,6 @@
 				586F4737219877C100B27E10 /* CookRecipeViewController.swift in Sources */,
 				5870C16B2198AAB000974D9B /* RecipesViewController.swift in Sources */,
 				58CB691A219897630017C45A /* SettingsViewController.swift in Sources */,
-				BF8CBFD759E684ABF6D5A9A2 /* ViewController.swift in Sources */,
 				BF8CB1CB99C2496971AF89C7 /* MessageType.swift in Sources */,
 				BF8CB906AE093C2BBFCDAF41 /* CommandType.swift in Sources */,
 				BF8CBDAE6840DAE65CB5A0FC /* MessageFormat.swift in Sources */,
@@ -528,9 +536,11 @@
 				58C9681321975D740086ED8E /* RecipeClass.swift in Sources */,
 				BF8CBD2E26C7E60E781854BA /* ConnectionState.swift in Sources */,
 				58C9681521975E560086ED8E /* FixedProgram.swift in Sources */,
+				58436AE2219CD09900DC84E7 /* Utilities.swift in Sources */,
 				58C1B5202198558800C9F7EF /* Category.swift in Sources */,
 				5870C16F2198BC3F00974D9B /* OnlineRecipe.swift in Sources */,
 				58C9681921975F2A0086ED8E /* LedState.swift in Sources */,
+				58C1EE1E219B78D300541A75 /* RecipeDetailViewController.swift in Sources */,
 				BF8CBBC382E60CDE78DF84A2 /* Message.swift in Sources */,
 				5870C16121989EA000974D9B /* CategoryViewController.swift in Sources */,
 				58CB6918219897440017C45A /* WelcomeTabViewController.swift in Sources */,

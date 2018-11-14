@@ -51,18 +51,14 @@ extension RecipesViewController: UICollectionViewDelegate, UICollectionViewDataS
         cell.title.text = recipe.title
         cell.ratingLabel.text = recipe.numberOfRatings
         
-        cell.contentView.layer.cornerRadius = 4.0
-        cell.contentView.layer.borderWidth = 1.0
-        cell.contentView.layer.borderColor = UIColor.clear.cgColor
-        cell.contentView.layer.masksToBounds = false
-        cell.layer.shadowColor = UIColor.gray.cgColor
-        cell.layer.shadowOffset = CGSize(width: 0, height: 1.0)
-        cell.layer.shadowRadius = 4.0
-        cell.layer.shadowOpacity = 1.0
-        cell.layer.masksToBounds = false
-        cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: cell.contentView.layer.cornerRadius).cgPath
+        collectionViewShadow(cell: cell)
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.selectedRecipe = object(at: indexPath)
+        self.performSegue(withIdentifier: "showRecipeDetailSegue", sender: collectionView)
     }
     
 }
@@ -108,6 +104,7 @@ extension RecipesViewController : UISearchResultsUpdating, UISearchBarDelegate {
 class RecipesViewController: UIViewController {
 
     var category: OnlineCategory? = nil
+    var selectedRecipe: OnlineRecipe? = nil
     
     var recipes: [OnlineRecipe] = []
     var filteredRecipes: [OnlineRecipe] = []
@@ -305,16 +302,25 @@ class RecipesViewController: UIViewController {
             let title = try column.getElementsByClass("item-title").first()?.text() ?? "-"
             let imageUrl = try column.getElementsByClass("img-responsive").first()?.attr("src")
             let ratingStr = try column.getElementsByAttributeValue("itemProp", "ratingValue").first()?.attr("content") ?? "0"
+            let href = try column.getElementsByClass("item-link").first()?.attr("href")
             let rating = Double(ratingStr) ?? 0
             
             let numberOfRatings = try column.getElementsByClass("rate-amount").first()?.text() ?? "(0 Bewertungen)"
             
             let url = URL(string: imageUrl!)
-            return OnlineRecipe(title: title, rating: rating, numberOfRatings: numberOfRatings, image: url)
+            let hrefUrl = URL(string: "https://www.rezeptwelt.de\(href!)")
+            return OnlineRecipe(title: title, rating: rating, numberOfRatings: numberOfRatings, detail: hrefUrl!, image: url)
         } catch let e {
             log.error("Error while parsing recipe :(", context: e)
         }
         return nil
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showRecipeDetailSegue" {
+            let viewController = segue.destination as! RecipeDetailViewController
+            viewController.recipe = selectedRecipe
+        }
     }
 
 }

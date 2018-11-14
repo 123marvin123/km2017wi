@@ -16,11 +16,14 @@ class OnlineRecipe {
     var image: URL? = nil
     var numberOfRatings: String = "(1 Bewertung)"
     
-    init(title: String, rating: Double, numberOfRatings: String = "(1 Bewertung)", image: URL? = nil) {
+    var detailUrl: URL
+    
+    init(title: String, rating: Double, numberOfRatings: String = "(1 Bewertung)", detail: URL, image: URL? = nil) {
         self.title = title
         self.rating = rating
         self.numberOfRatings = numberOfRatings
         self.image = image
+        self.detailUrl = detail
     }
 
     

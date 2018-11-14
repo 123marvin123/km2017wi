@@ -6,7 +6,6 @@ target 'km2017wi' do
   use_frameworks!
 
   # Pods for km2017wi
-  pod 'SwiftyButton'
   pod 'BlueSocket'
   pod 'SwiftyBeaver'
   pod 'SwiftMessages'
@@ -14,6 +13,10 @@ target 'km2017wi' do
   pod 'Alamofire'
   pod 'Kingfisher'
   pod 'Cosmos'
+  pod 'moa'
+  pod 'Auk'
+  pod 'Eureka'
+  pod 'ViewRow', :git => 'https://github.com/EurekaCommunity/ViewRow'
 
   target 'km2017wiTests' do
     inherit! :search_paths
