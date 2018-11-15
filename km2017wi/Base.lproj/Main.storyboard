@@ -155,8 +155,7 @@
                     <navigationItem key="navigationItem" title="Title" largeTitleDisplayMode="never" id="STf-7L-w5P">
                         <barButtonItem key="rightBarButtonItem" title="Download" image="download" id="u0h-op-Klo">
                             <connections>
-                                <action selector="saveRecipe:" destination="ZEJ-y7-35B" id="m8f-DH-yTA"/>
-                                <segue destination="6uE-0x-q4j" kind="custom" customClass="SwiftMessagesMidCardSegue" customModule="km2017wi" customModuleProvider="target" id="6Um-3g-naU"/>
+                                <segue destination="6uE-0x-q4j" kind="custom" identifier="saveRecipeSegue" customClass="SwiftMessagesTopCardSegue" customModule="km2017wi" customModuleProvider="target" id="6Um-3g-naU"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -176,12 +175,12 @@
                         <viewLayoutGuide key="safeArea" id="r5c-1J-Jib"/>
                     </view>
                     <navigationItem key="navigationItem" title="Rezept speichern" id="R0X-w2-0by">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="cancel" id="lgZ-xP-yM4">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="lgZ-xP-yM4">
                             <connections>
                                 <action selector="dismiss:" destination="pgB-z2-hqv" id="uAT-ka-dxf"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Speichern" image="save" id="K0R-2A-mEZ">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="K0R-2A-mEZ">
                             <connections>
                                 <action selector="saveRecipe:" destination="pgB-z2-hqv" id="6Xa-IJ-wpq"/>
                             </connections>
@@ -419,10 +418,8 @@
     <resources>
         <image name="01-Grundrezepte" width="500" height="341"/>
         <image name="bookmark" width="30" height="30"/>
-        <image name="cancel" width="30" height="30"/>
         <image name="download" width="30" height="30"/>
         <image name="gallery" width="30" height="30"/>
-        <image name="save" width="30" height="30"/>
         <image name="settings" width="30" height="30"/>
     </resources>
 </document>

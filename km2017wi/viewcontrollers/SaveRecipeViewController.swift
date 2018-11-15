@@ -8,17 +8,37 @@
 
 import UIKit
 import Eureka
+import FloatLabelRow
+import ImageRow
+import Kingfisher
 
 class SaveRecipeViewController: FormViewController {
 
+    var recipe: OnlineRecipe!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         form +++ Section("Titel")
         
-            <<< LabelRow() { row in
-                    row.title = "Hallo"
+            <<< TextFloatLabelRow() { row in
+                row.title = "Rezepttitel"
+                row.value = recipe.title
             }
+        
+            <<< TextFloatLabelRow() { row in
+                row.title = "Kurzbeschreibung"
+            }
+        
+        form +++ ImageRow() { row in
+            row.title = "Bild"
+            row.sourceTypes = [.PhotoLibrary, .SavedPhotosAlbum]
+            row.clearAction = .yes(style: .destructive)
+            KingfisherManager.shared.retrieveImage(with: recipe.image!, options: nil, progressBlock: nil,
+                                                   completionHandler: { (image, _, _, _) in
+                if let image = image { row.value = image }
+            })
+        }
     }
 
     @IBAction func dismiss(_ sender: Any) {
@@ -26,6 +46,7 @@ class SaveRecipeViewController: FormViewController {
     }
     
     @IBAction func saveRecipe(_ sender: Any) {
-        
+        //TODO: implement
+        dismiss(sender)
     }
 }

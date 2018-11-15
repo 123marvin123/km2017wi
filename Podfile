@@ -18,6 +18,8 @@ target 'km2017wi' do
   pod 'Eureka'
   pod 'ViewRow', :git => 'https://github.com/EurekaCommunity/ViewRow'
   pod 'RichTextRow', :path => 'lib/RichTextRow'
+  pod 'FloatLabelRow', :path => 'lib/FloatLabelRow'
+  pod 'ImageRow', :git => 'https://github.com/EurekaCommunity/ImageRow'
 
   target 'km2017wiTests' do
     inherit! :search_paths

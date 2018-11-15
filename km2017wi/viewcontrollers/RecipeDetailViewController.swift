@@ -80,6 +80,7 @@ class RecipeDetailViewController: FormViewController  {
                         
                         let row = LabelRow() {
                             $0.title = text
+                            $0.cell.textLabel?.numberOfLines = 0
                         }
                         self.ingredientsSection.append(row)
                     }
@@ -107,12 +108,16 @@ class RecipeDetailViewController: FormViewController  {
         }
     }
     
-    @IBAction func saveRecipe(_ sender: Any) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let identifier = segue.identifier else { return }
         
-    }
-    
-    @IBAction func dismissPresented(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        if identifier == "saveRecipeSegue" {
+            if let saveController = (segue.destination as? UINavigationController)?.children.first as? SaveRecipeViewController {
+                saveController.recipe = self.recipe
+            } else {
+                log.error("Destination was not SaveRecipeViewController")
+            }
+        }
     }
     
 }
