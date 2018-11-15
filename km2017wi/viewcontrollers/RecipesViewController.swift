@@ -12,6 +12,16 @@ import SwiftSoup
 import Kingfisher
 import Cosmos
 
+extension RecipesViewController {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let cells = collectionView.visibleCells as! [OnlineRecipeCollectionViewCell]
+        let bounds = collectionView.bounds
+        for cell in cells {
+            cell.updateParallaxOffset(collectionViewBounds: bounds)
+        }
+    }
+}
+
 extension RecipesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -49,7 +59,7 @@ extension RecipesViewController: UICollectionViewDelegate, UICollectionViewDataS
         
         cell.rating.rating = recipe.rating
         cell.title.text = recipe.title
-        cell.ratingLabel.text = recipe.numberOfRatings
+        cell.rating.text = recipe.numberOfRatings
         
         collectionViewShadow(cell: cell)
         
@@ -138,11 +148,6 @@ class RecipesViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activityIndicator)
         
         loadRecipes(forPage: 1)
-    }
-    
-    @objc
-    func scrollToTop(_ sender: Any) {
-        
     }
     
     

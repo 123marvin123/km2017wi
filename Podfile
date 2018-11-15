@@ -17,6 +17,7 @@ target 'km2017wi' do
   pod 'Auk'
   pod 'Eureka'
   pod 'ViewRow', :git => 'https://github.com/EurekaCommunity/ViewRow'
+  pod 'RichTextRow', :path => 'lib/RichTextRow'
 
   target 'km2017wiTests' do
     inherit! :search_paths

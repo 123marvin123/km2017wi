@@ -13,12 +13,15 @@ import Kingfisher
 import Auk
 import Eureka
 import ViewRow
+import RichTextRow
+import SwiftMessages
 
 class RecipeDetailViewController: FormViewController  {
 
     var recipe: OnlineRecipe!
     private let titleScrollView = UIScrollView()
     private var ingredientsSection = Section("Zutaten")
+    private var preparationSection = Section("Zubereitung")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +43,8 @@ class RecipeDetailViewController: FormViewController  {
                 })
         
         form +++ ingredientsSection
-        form +++ Section("Zubereitung")
+        form +++ preparationSection
+        
         
         titleScrollView.auk.settings.contentMode = .scaleAspectFill
         titleScrollView.auk.startAutoScroll(delaySeconds: 12)
@@ -71,7 +75,9 @@ class RecipeDetailViewController: FormViewController  {
                     }
                     
                     for ingredient in try doc.getElementsByAttributeValue("itemprop", "recipeIngredient") {
-                        let text = try ingredient.text()
+                        let text = try ingredient.text().trimmingCharacters(in: .whitespacesAndNewlines)
+                        if text.count == 0 { continue }
+                        
                         let row = LabelRow() {
                             $0.title = text
                         }
@@ -84,6 +90,16 @@ class RecipeDetailViewController: FormViewController  {
                         self.ingredientsSection.reload()
                     }
                     
+                    if let preparation = try doc.getElementsByClass("steps-list").first() {
+                        let prepHtml = try preparation.html();
+                        let textView = RichTextRow() {
+                            $0.title = "Zubereitung"
+                            $0.value = prepHtml
+                        }
+        
+                        self.preparationSection.append(textView)
+                    }
+                    
                 } catch let e {
                     log.error("Error while parsing detail page.", context: e)
                 }
@@ -91,14 +107,12 @@ class RecipeDetailViewController: FormViewController  {
         }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func saveRecipe(_ sender: Any) {
+        
     }
-    */
-
+    
+    @IBAction func dismissPresented(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
 }

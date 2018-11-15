@@ -8,6 +8,18 @@
 
 import UIKit
 
+extension CategoryViewController {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let cells = collectionView.visibleCells as! [CategoryViewCell]
+        let bounds = collectionView.bounds
+        for cell in cells {
+            cell.updateParallaxOffset(collectionViewBounds: bounds)
+        }
+    }
+    
+}
+
 class CategoryViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
     let categories = [OnlineCategory(id: "grundrezepte", title: "Grundrezepte", image: UIImage(named: "01-Grundrezepte")),
@@ -26,6 +38,8 @@ class CategoryViewController: UIViewController, UICollectionViewDelegate, UIColl
                       OnlineCategory(id: "getranke", title: "Getränke", image: UIImage(named: "14-Getränke")),
                       OnlineCategory(id: "babybeikostbreie", title: "Baby-Beikost/Breie", image: UIImage(named: "15-Brei"))]
     
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -42,6 +56,7 @@ class CategoryViewController: UIViewController, UICollectionViewDelegate, UIColl
         cell.title.text = category.title
         cell.image.image = category.image
         cell.category = category
+        cell.updateParallaxOffset(collectionViewBounds: collectionView.bounds)
         
         collectionViewShadow(cell: cell)
         

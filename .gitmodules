@@ -1,0 +1,3 @@
+[submodule "lib/RichTextRow"]
+	path = lib/RichTextRow
+	url = https://github.com/TwoPiCode/RichTextRow.git

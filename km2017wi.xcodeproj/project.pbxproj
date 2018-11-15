@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		0F259751A2B9CED0DBBBB259 /* Pods_km2017wiUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B09C50206E5B58A942E16F21 /* Pods_km2017wiUITests.framework */; };
 		3EA8951CC5B32EB45653D698 /* Pods_km2017wiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64E4781836C92F7CBE895067 /* Pods_km2017wiTests.framework */; };
+		5800E51E219E054A00001FC1 /* ParallaxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5800E51D219E054A00001FC1 /* ParallaxCell.swift */; };
+		5800E522219E0CD600001FC1 /* SwiftMessagesSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5800E521219E0CD600001FC1 /* SwiftMessagesSegue.swift */; };
+		5800E524219E11E200001FC1 /* SaveRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5800E523219E11E200001FC1 /* SaveRecipeViewController.swift */; };
 		58436AE2219CD09900DC84E7 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58436AE1219CD09900DC84E7 /* Utilities.swift */; };
 		584BB6D92198CD1B003168BE /* OnlineCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584BB6D82198CD1B003168BE /* OnlineCategory.swift */; };
 		586F4737219877C100B27E10 /* CookRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586F4736219877C100B27E10 /* CookRecipeViewController.swift */; };
@@ -77,6 +80,9 @@
 /* Begin PBXFileReference section */
 		2155186068AEE80EB6144DF0 /* Pods-km2017wi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-km2017wi.release.xcconfig"; path = "Pods/Target Support Files/Pods-km2017wi/Pods-km2017wi.release.xcconfig"; sourceTree = "<group>"; };
 		466DFE2935F2E5C115C83E69 /* Pods-km2017wiUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-km2017wiUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-km2017wiUITests/Pods-km2017wiUITests.release.xcconfig"; sourceTree = "<group>"; };
+		5800E51D219E054A00001FC1 /* ParallaxCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallaxCell.swift; sourceTree = "<group>"; };
+		5800E521219E0CD600001FC1 /* SwiftMessagesSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMessagesSegue.swift; sourceTree = "<group>"; };
+		5800E523219E11E200001FC1 /* SaveRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveRecipeViewController.swift; sourceTree = "<group>"; };
 		58436AE1219CD09900DC84E7 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		584BB6D82198CD1B003168BE /* OnlineCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineCategory.swift; sourceTree = "<group>"; };
 		586F4736219877C100B27E10 /* CookRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookRecipeViewController.swift; sourceTree = "<group>"; };
@@ -175,6 +181,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5800E520219E0CC700001FC1 /* segues */ = {
+			isa = PBXGroup;
+			children = (
+				5800E521219E0CD600001FC1 /* SwiftMessagesSegue.swift */,
+			);
+			path = segues;
+			sourceTree = "<group>";
+		};
 		58436ADF219CAA4100DC84E7 /* viewcontrollers */ = {
 			isa = PBXGroup;
 			children = (
@@ -184,6 +198,7 @@
 				5870C16021989EA000974D9B /* CategoryViewController.swift */,
 				5870C16A2198AAB000974D9B /* RecipesViewController.swift */,
 				58C1EE1D219B78D300541A75 /* RecipeDetailViewController.swift */,
+				5800E523219E11E200001FC1 /* SaveRecipeViewController.swift */,
 			);
 			path = viewcontrollers;
 			sourceTree = "<group>";
@@ -193,6 +208,7 @@
 			children = (
 				5870C1682198A6D600974D9B /* CategoryViewCell.swift */,
 				5870C16C2198BAFB00974D9B /* OnlineRecipeCollectionViewCell.swift */,
+				5800E51D219E054A00001FC1 /* ParallaxCell.swift */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -277,6 +293,7 @@
 		BF8CBF32D292E30E58C09699 /* km2017wi */ = {
 			isa = PBXGroup;
 			children = (
+				5800E520219E0CC700001FC1 /* segues */,
 				58436AE0219CAA5C00DC84E7 /* cells */,
 				58436ADF219CAA4100DC84E7 /* viewcontrollers */,
 				BF8CB1B832EBC8E6586574AD /* structures */,
@@ -463,6 +480,7 @@
 				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/RichTextRow/RichTextRow.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftSoup/SwiftSoup.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
@@ -477,6 +495,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RichTextRow.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMessages.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSoup.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
@@ -531,8 +550,10 @@
 				BF8CB906AE093C2BBFCDAF41 /* CommandType.swift in Sources */,
 				BF8CBDAE6840DAE65CB5A0FC /* MessageFormat.swift in Sources */,
 				BF8CB66153D19C8397D5ECE1 /* MachineState.swift in Sources */,
+				5800E51E219E054A00001FC1 /* ParallaxCell.swift in Sources */,
 				5870C16D2198BAFB00974D9B /* OnlineRecipeCollectionViewCell.swift in Sources */,
 				BF8CBBAFD94C3BCC9D9336F5 /* Machine.swift in Sources */,
+				5800E524219E11E200001FC1 /* SaveRecipeViewController.swift in Sources */,
 				58C9681321975D740086ED8E /* RecipeClass.swift in Sources */,
 				BF8CBD2E26C7E60E781854BA /* ConnectionState.swift in Sources */,
 				58C9681521975E560086ED8E /* FixedProgram.swift in Sources */,
@@ -548,6 +569,7 @@
 				BF8CB3945A1F68F36885FEAA /* WeightStatus.swift in Sources */,
 				584BB6D92198CD1B003168BE /* OnlineCategory.swift in Sources */,
 				58C1B51E219853C900C9F7EF /* Recipe.swift in Sources */,
+				5800E522219E0CD600001FC1 /* SwiftMessagesSegue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CategoryViewCell: UICollectionViewCell {
+class CategoryViewCell: ParallaxCell {
     
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var image: UIImageView!

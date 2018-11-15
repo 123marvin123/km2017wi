@@ -9,11 +9,10 @@
 import UIKit
 import Cosmos
 
-class OnlineRecipeCollectionViewCell: UICollectionViewCell {
+class OnlineRecipeCollectionViewCell: ParallaxCell {
     
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var rating: CosmosView!
-    @IBOutlet weak var ratingLabel: UILabel!
 
 }
