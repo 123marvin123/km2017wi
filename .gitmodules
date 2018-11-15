@@ -1,3 +1,7 @@
 [submodule "lib/RichTextRow"]
 	path = lib/RichTextRow
-	url = https://github.com/TwoPiCode/RichTextRow.git
+	url = https://github.com/123marvin123/RichTextRow.git
+[submodule "lib/FloatLabelRow"]
+	path = lib/FloatLabelRow
+	url = https://github.com/Yelles/FloatLabelRow.git
+	branch = Eureka-4.x
