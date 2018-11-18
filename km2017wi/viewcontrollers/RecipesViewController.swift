@@ -30,10 +30,14 @@ extension RecipesViewController: UICollectionViewDelegate, UICollectionViewDataS
             return
         }
         
-        if isFiltering() && isFilteringOnline && self.currentRemoteSearchIndex < self.maxRemoteSearchIndex {
+        if isFiltering() && isFilteringOnline && self.currentRemoteSearchIndex < self.maxRemoteSearchIndex && !isSearchResult {
             downloadRemoteRecipes(forTerm: searchController.searchBar.text ?? "", page: self.currentRemoteSearchIndex + 1)
         } else if !isFiltering() && self.currentCategoryRecipeIndex < self.maxCategoryRecipeIndex {
-            loadRecipes(forPage: self.currentCategoryRecipeIndex + 1)
+            if !isSearchResult {
+                loadRecipes(forPage: self.currentCategoryRecipeIndex + 1)
+            } else {
+                loadSearchResult(forPage: self.currentCategoryRecipeIndex + 1)
+            }
         }
     }
     
@@ -67,8 +71,7 @@ extension RecipesViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.selectedRecipe = object(at: indexPath)
-        self.performSegue(withIdentifier: "showRecipeDetailSegue", sender: collectionView)
+        self.performSegue(withIdentifier: "showRecipeDetailSegue", sender: object(at: indexPath))
     }
     
 }
@@ -96,6 +99,8 @@ extension RecipesViewController : UISearchResultsUpdating, UISearchBarDelegate {
     
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard category != nil else { return }
+        
         if let term = searchBar.text {
             isFilteringOnline = true
             filterRemoteRecipes(forTerm: term)
@@ -114,7 +119,6 @@ extension RecipesViewController : UISearchResultsUpdating, UISearchBarDelegate {
 class RecipesViewController: UIViewController {
 
     var category: OnlineCategory? = nil
-    var selectedRecipe: OnlineRecipe? = nil
     
     var recipes: [OnlineRecipe] = []
     var filteredRecipes: [OnlineRecipe] = []
@@ -122,10 +126,15 @@ class RecipesViewController: UIViewController {
     
     var currentCategoryRecipeIndex = 1
     var currentRemoteSearchIndex = 1
+    
     var maxCategoryRecipeIndex = 1
     var maxRemoteSearchIndex = 1
     
     var isFilteringOnline: Bool = false
+    var isSearchResult: Bool = false
+    var searchCategories: [OnlineCategory] = []
+    var searchResultTerm: String = ""
+    
     var activityIndicator = UIActivityIndicatorView(style: .gray)
     
     let searchController = UISearchController(searchResultsController: nil)
@@ -142,12 +151,14 @@ class RecipesViewController: UIViewController {
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
-        self.navigationItem.title = category?.title
+        self.navigationItem.title = category?.title ?? "Suchergebnis"
         
         activityIndicator.hidesWhenStopped = true
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activityIndicator)
         
-        loadRecipes(forPage: 1)
+        if !isSearchResult {
+            loadRecipes(forPage: 1)
+        }
     }
     
     
@@ -170,29 +181,48 @@ class RecipesViewController: UIViewController {
             }
             
             if let str = response.result.value {
+                self.parseLocalRecipes(str: str, page: page)
+            }
+        }
+    }
+    
+    func parseLocalRecipes(str: String, page: Int) {
+        Utilities.parseRecipeList(html: str, finished: { (parsedRecipes, maxIndex, error) in
+            self.hideLoadingIndicator()
+            guard error == nil else { return }
+            
+            self.currentCategoryRecipeIndex = page
+            self.maxCategoryRecipeIndex = maxIndex ?? page
+            if page == 1 {
+                self.recipes = parsedRecipes
+                self.collectionView.reloadData()
+            } else {
+                let lastIndex = self.recipes.endIndex
+                self.recipes.append(contentsOf: parsedRecipes)
                 
-                self.parseHtml(htmlStr: str, finished: { (parsedRecipes, maxIndex, error) in
-                    self.hideLoadingIndicator()
-                    guard error == nil else { return }
-                    
-                    self.currentCategoryRecipeIndex = page
-                    self.maxCategoryRecipeIndex = maxIndex ?? page
-                    if page == 1 {
-                        self.recipes = parsedRecipes
-                        self.collectionView.reloadData()
-                    } else {
-                        let lastIndex = self.recipes.endIndex
-                        self.recipes.append(contentsOf: parsedRecipes)
-                        
-                        var indiciesToBeUpdated: [IndexPath] = []
-                        for i in lastIndex..<self.recipes.endIndex {
-                            indiciesToBeUpdated.append(IndexPath(item: i, section: 0))
-                        }
-                        
-                        self.collectionView.insertItems(at: indiciesToBeUpdated)
-                    }
-                })
+                var indiciesToBeUpdated: [IndexPath] = []
+                for i in lastIndex..<self.recipes.endIndex {
+                    indiciesToBeUpdated.append(IndexPath(item: i, section: 0))
+                }
                 
+                self.collectionView.insertItems(at: indiciesToBeUpdated)
+            }
+        })
+    }
+    
+    func loadSearchResult(forPage page: Int = 1, rows: Int = 12) {
+        showLoadingIndicator()
+        let encodedSearchTerm = searchResultTerm.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+        let categoryTerm = searchCategories.compactMap { $0.id }.joined(separator: ",").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+    
+        Alamofire.request("https://www.rezeptwelt.de/suche?&filters=categories%3A\(categoryTerm)%3B&search=\(encodedSearchTerm)&rows=\(rows)&page=\(page)").responseString { (response) in
+            if response.error != nil {
+                log.error("Could not get search result: \(response.error!.localizedDescription)")
+                return
+            }
+            
+            if let str = response.result.value {
+                self.parseLocalRecipes(str: str, page: page)
             }
         }
     }
@@ -217,7 +247,7 @@ class RecipesViewController: UIViewController {
     
     private func downloadRemoteRecipes(forTerm searchTerm: String, page: Int = 1) {
         showLoadingIndicator()
-        Alamofire.request("https://www.rezeptwelt.de/suche?filters=categories%3A\(category?.id ?? "grundrezepte")%3B&search=\(searchTerm)&page=\(page)").responseString { (response) in
+        Alamofire.request("https://www.rezeptwelt.de/suche?filters=categories%3A\(category?.id ?? "grundrezepte")%3B&search=\(searchTerm)&rows=12&page=\(page)").responseString { (response) in
             if response.error != nil {
                 log.error("Could not search for recipes")
                 return
@@ -225,7 +255,7 @@ class RecipesViewController: UIViewController {
             
             if let str = response.result.value {
                 
-                self.parseHtml(htmlStr: str, finished: { (parsedRecipes, maxIndex, error) in
+                Utilities.parseRecipeList(html: str, finished: { (parsedRecipes, maxIndex, error) in
                     self.hideLoadingIndicator()
                     guard error == nil else { return }
                     
@@ -265,67 +295,15 @@ class RecipesViewController: UIViewController {
         }
     }
     
-    private func parseHtml(htmlStr: String, finished: @escaping ([OnlineRecipe], Int?, Error?) -> Void) {
-        DispatchQueue.global().async {
-            var collection: [OnlineRecipe] = []
-            var maxIndex: Int? = nil
-            
-            do {
-                let doc = try SwiftSoup.parse(htmlStr)
-                let galleryView = try doc.getElementById("recipe-gallery-view")
-                if let columns = try galleryView?.getElementsByClass("col-sm-4") {
-                    for column in columns {
-                        if let recipe = self.parseRecipeColumn(column: column) {
-                            collection.append(recipe)
-                        }
-                    }
-                }
-                
-                if let pager = try doc.getElementsByClass("pager").first() {
-                    if let lastLinkElement = try pager.getElementsByClass("last-link").first() {
-                        let maxPageString = try lastLinkElement.attr("href")
-                        if let endIndex = maxPageString.range(of: "page=")?.upperBound {
-                            maxIndex = Int(maxPageString[endIndex...])
-                        }
-                    }
-                }
-                
-            } catch let e {
-                log.error("Error while parsing html.", context: e)
-                finished(collection, nil, e)
-                return
-            }
-            
-            DispatchQueue.main.sync {
-                finished(collection, maxIndex, nil)
-            }
-        }
-    }
-    
-    private func parseRecipeColumn(column: Element) -> OnlineRecipe? {
-        do {
-            let title = try column.getElementsByClass("item-title").first()?.text() ?? "-"
-            let imageUrl = try column.getElementsByClass("img-responsive").first()?.attr("src")
-            let ratingStr = try column.getElementsByAttributeValue("itemProp", "ratingValue").first()?.attr("content") ?? "0"
-            let href = try column.getElementsByClass("item-link").first()?.attr("href")
-            let rating = Double(ratingStr) ?? 0
-            
-            let numberOfRatings = try column.getElementsByClass("rate-amount").first()?.text() ?? "(0 Bewertungen)"
-            
-            let url = URL(string: imageUrl!)
-            let hrefUrl = URL(string: "https://www.rezeptwelt.de\(href!)")
-            return OnlineRecipe(title: title, rating: rating, numberOfRatings: numberOfRatings, detail: hrefUrl!, image: url)
-        } catch let e {
-            log.error("Error while parsing recipe :(", context: e)
-        }
-        return nil
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showRecipeDetailSegue" {
-            let viewController = segue.destination as! RecipeDetailViewController
-            viewController.recipe = selectedRecipe
+            if let recipe = sender as? OnlineRecipe {
+                let viewController = segue.destination as! RecipeDetailViewController
+                viewController.recipe = recipe
+            }
         }
     }
+    
+    
 
 }

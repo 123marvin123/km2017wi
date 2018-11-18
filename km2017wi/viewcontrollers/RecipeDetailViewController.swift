@@ -48,7 +48,11 @@ class RecipeDetailViewController: FormViewController  {
         
         titleScrollView.auk.settings.contentMode = .scaleAspectFill
         titleScrollView.auk.startAutoScroll(delaySeconds: 12)
-        
+        UIApplication.shared.isIdleTimerDisabled = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        UIApplication.shared.isIdleTimerDisabled = false
     }
     
 
@@ -74,15 +78,39 @@ class RecipeDetailViewController: FormViewController  {
                         
                     }
                     
-                    for ingredient in try doc.getElementsByAttributeValue("itemprop", "recipeIngredient") {
-                        let text = try ingredient.text().trimmingCharacters(in: .whitespacesAndNewlines)
-                        if text.count == 0 { continue }
+                    if let stepContainer = try doc.getElementById("ingredient-section")?.child(0) {
                         
-                        let row = LabelRow() {
-                            $0.title = text
-                            $0.cell.textLabel?.numberOfLines = 0
+                        for child in stepContainer.children().filter({ return $0.tagName().elementsEqual("ul") }) {
+                            
+                            if child.siblingIndex > 0 {
+                                let upperElement = try child.previousElementSibling()
+                                if upperElement?.tagName() == "p" {
+                                    let text = try upperElement?.text().trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+                                    if text.count > 0 {
+                                        let row = LabelRow() {
+                                            $0.title = text
+                                            $0.cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 16.0)
+                                        }
+                                        self.ingredientsSection.append(row)
+                                    }
+                                }
+                            }
+                           
+                            for ingredient in try child.getElementsByAttributeValue("itemprop", "recipeIngredient") {
+                                let text = try ingredient.text().trimmingCharacters(in: .whitespacesAndNewlines)
+                                if text.count == 0 { continue }
+                                
+                                let row = LabelRow() {
+                                    $0.title = text
+                                    $0.cell.textLabel?.numberOfLines = 0
+                                }
+                                self.ingredientsSection.append(row)
+                            }
+                            
                         }
-                        self.ingredientsSection.append(row)
+                        self.ingredientsSection.reload()
+                    
+                        
                     }
                     
                     if let yield = try doc.getElementsByAttributeValue("itemprop", "recipeYield").first() {
@@ -91,7 +119,7 @@ class RecipeDetailViewController: FormViewController  {
                         self.ingredientsSection.reload()
                     }
                     
-                    if let preparation = try doc.getElementsByClass("steps-list").first() {
+                    if let preparation = try doc.getElementsByClass("steps-list").first()?.children() {
                         let prepHtml = try preparation.html();
                         let textView = RichTextRow() {
                             $0.title = "Zubereitung"
@@ -99,6 +127,20 @@ class RecipeDetailViewController: FormViewController  {
                         }
         
                         self.preparationSection.append(textView)
+                    }
+                    
+                    if let tips = try doc.getElementsByClass("tips").first()?.getElementsByTag("p").compactMap({ return try $0.text().trimmingCharacters(in: .whitespacesAndNewlines) }).joined(separator: "\n") {
+                        
+                        if tips.count > 0 {
+                            let section = Section("Tipps")
+                            let label = LabelRow() {
+                                $0.title = tips
+                                $0.cell.textLabel?.numberOfLines = 0
+                            }
+                            section.append(label)
+                            
+                            self.form.append(section)
+                        }
                     }
                     
                 } catch let e {

@@ -30,6 +30,7 @@
 		58C9681921975F2A0086ED8E /* LedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C9681821975F2A0086ED8E /* LedState.swift */; };
 		58CB6918219897440017C45A /* WelcomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CB6917219897440017C45A /* WelcomeTabViewController.swift */; };
 		58CB691A219897630017C45A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CB6919219897630017C45A /* SettingsViewController.swift */; };
+		58D8F26921A06BF900EF0E4C /* SearchRecipesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D8F26821A06BF900EF0E4C /* SearchRecipesViewController.swift */; };
 		A9751FC655D94F8A396AA9B3 /* Pods_km2017wi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 849ED486B6C8F72863117955 /* Pods_km2017wi.framework */; };
 		BF8CB0B2FFDCE2B0191CD207 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF8CB58034249965F0B8D4B2 /* LaunchScreen.storyboard */; };
 		BF8CB0C6D3F54ED053BB746F /* km2017wiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8CBE0890F7909146783491 /* km2017wiTests.swift */; };
@@ -101,6 +102,7 @@
 		58C9681821975F2A0086ED8E /* LedState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LedState.swift; sourceTree = "<group>"; };
 		58CB6917219897440017C45A /* WelcomeTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeTabViewController.swift; sourceTree = "<group>"; };
 		58CB6919219897630017C45A /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		58D8F26821A06BF900EF0E4C /* SearchRecipesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecipesViewController.swift; sourceTree = "<group>"; };
 		64E4781836C92F7CBE895067 /* Pods_km2017wiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_km2017wiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		849ED486B6C8F72863117955 /* Pods_km2017wi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_km2017wi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B09C50206E5B58A942E16F21 /* Pods_km2017wiUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_km2017wiUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -199,6 +201,7 @@
 				5870C16A2198AAB000974D9B /* RecipesViewController.swift */,
 				58C1EE1D219B78D300541A75 /* RecipeDetailViewController.swift */,
 				5800E523219E11E200001FC1 /* SaveRecipeViewController.swift */,
+				58D8F26821A06BF900EF0E4C /* SearchRecipesViewController.swift */,
 			);
 			path = viewcontrollers;
 			sourceTree = "<group>";
@@ -264,7 +267,6 @@
 			children = (
 				BF8CBE14BEB0A94D98C99A4A /* Products */,
 				BF8CBF32D292E30E58C09699 /* km2017wi */,
-				BF8CBC905C68B0BC52E02B62 /* km2017wiTests */,
 				BF8CBE8B2A85E05FB9B6B67F /* km2017wiUITests */,
 				0B6EFBA019A0F46BAA6CF270 /* Pods */,
 				24F35874037DA7FECD57D1DD /* Frameworks */,
@@ -306,6 +308,7 @@
 				5870C16E2198BC3F00974D9B /* OnlineRecipe.swift */,
 				584BB6D82198CD1B003168BE /* OnlineCategory.swift */,
 				58436AE1219CD09900DC84E7 /* Utilities.swift */,
+				BF8CBC905C68B0BC52E02B62 /* km2017wiTests */,
 			);
 			path = km2017wi;
 			sourceTree = "<group>";
@@ -559,6 +562,7 @@
 				BF8CBBAFD94C3BCC9D9336F5 /* Machine.swift in Sources */,
 				5800E524219E11E200001FC1 /* SaveRecipeViewController.swift in Sources */,
 				58C9681321975D740086ED8E /* RecipeClass.swift in Sources */,
+				58D8F26921A06BF900EF0E4C /* SearchRecipesViewController.swift in Sources */,
 				BF8CBD2E26C7E60E781854BA /* ConnectionState.swift in Sources */,
 				58C9681521975E560086ED8E /* FixedProgram.swift in Sources */,
 				58436AE2219CD09900DC84E7 /* Utilities.swift in Sources */,
@@ -773,7 +777,6 @@
 				DEVELOPMENT_TEAM = VNMGUT62AY;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = km2017wi/Info.plist;
@@ -794,7 +797,6 @@
 				DEVELOPMENT_TEAM = VNMGUT62AY;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = km2017wi/Info.plist;

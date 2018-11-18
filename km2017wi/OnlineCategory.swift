@@ -9,7 +9,19 @@
 import Foundation
 import UIKit
 
-class OnlineCategory {
+class OnlineCategory : Hashable, CustomStringConvertible {
+    
+    static func == (lhs: OnlineCategory, rhs: OnlineCategory) -> Bool {
+        return lhs.id == rhs.id && lhs.title == rhs.title && lhs.image == rhs.image
+    }
+    
+    public var hashValue: Int {
+        get {
+            return title.hashValue & id.hashValue & image.hashValue
+        }
+    }
+    
+    var description: String { return title }
     
     var title: String
     var image: UIImage? = nil
